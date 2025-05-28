@@ -17,7 +17,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "_user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +34,12 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (role == null) {
+            role = Role.USER;
+        }
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
+
 
     @Override
     public String toString() {
